@@ -1,0 +1,60 @@
+%%% typesets the TITLE page
+
+   \clearpage
+   \thispagestyle{empty}
+   {%
+   \centering
+%   \vspace*{-\toptafiddle}
+   \begin{DoubleSpace} \thesistitle
+
+   \ifdraftdoc
+   (Draft generated \today)
+    \else
+   \relax
+    \fi
+   \end{DoubleSpace}
+
+    \begin{SingleSpace}
+    \vspace{2\onelineskip}
+    \end{SingleSpace}
+        by \\
+    \begin{SingleSpace}
+    \vspace{2\onelineskip}
+    \end{SingleSpace}
+        \thesisauthor
+      \vspace{2\onelineskip}
+
+
+    \begin{DoubleSpace}
+    A \thesisdoctype \ accepted and approved in partial fulfillment of the\\ 
+    requirements for the degree of \\
+    \thesisdegree \\
+    in \thesismajor \\
+    \end{DoubleSpace}
+
+    \begin{SingleSpace}
+        \vspace{2\onelineskip}
+    \end{SingleSpace}
+
+    \begin{DoubleSpace} % Modify below for specifying your committee
+    Dissertation Committee: \\
+    Name of Chair Person, Chair \\
+    Name of Core Member A, Core Member \\
+    Name of Core Member B, Core Member \\
+    Name of Representative,  Institutional Representative \\
+    \end{DoubleSpace}
+
+    \begin{SingleSpace}
+        \vspace{2\onelineskip}
+    \end{SingleSpace}
+
+    \begin{DoubleSpace}
+    \begin{center}
+        University of Oregon \\
+        \thesisgradterm \ \thesisgradyear
+    \end{center}
+    \end{DoubleSpace}
+    
+   }
+   \enlargethispage{\bottafiddle}
+   \clearpage

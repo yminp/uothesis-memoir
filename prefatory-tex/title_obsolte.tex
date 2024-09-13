@@ -1,0 +1,36 @@
+%%% typesets the TITLE page
+%% Will not be used anymore from 2023 ETD Style
+
+   \clearpage
+   \thispagestyle{empty}
+   {%
+   \centering
+%   \vspace*{-\toptafiddle}
+   \begin{DoubleSpace} \MakeUppercase{\thesistitle}
+
+   \ifdraftdoc
+   (Draft generated \today)
+    \else
+   \relax
+    \fi
+   \end{DoubleSpace}
+   
+    \begin{vplace}[1]
+    \begin{SingleSpace}
+        by \\ \vspace{\onelineskip}
+        \MakeUppercase{\thesisauthor}
+    \end{SingleSpace}
+    \end{vplace}
+
+   \begin{SingleSpace}
+   \MakeUppercase{A \thesisdoctype} \\ \vspace{\onelineskip}
+   Presented to the \thesisdept \\
+   and the Division of Graduate Studies of the University of Oregon \\
+   in partial fulfillment of the requirements \\
+   for the degree of \\
+   \thesisdegree \\ \vspace{\onelineskip}
+    \thesisgraddate
+   \end{SingleSpace}
+   }
+   \enlargethispage{\bottafiddle}
+   \clearpage

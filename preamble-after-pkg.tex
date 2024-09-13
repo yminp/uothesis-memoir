@@ -1,0 +1,51 @@
+%% Some useful math commands
+
+% Wide hat, bar, tilde
+\newcommand\wdhat[1]{\hstretch{2}{\hat{\hstretch{.5}{#1}}}}
+\newcommand\wdbar[1]{\hstretch{2}{\bar{\hstretch{.5}{#1}}}}
+\newcommand\wdtilde[1]{\hstretch{2}{\tilde{\hstretch{.5}{#1}}}}
+
+% \Set command
+\providecommand\given{} % so it exists
+\newcommand\SetSymbol[1][]{
+   \nonscript\,#1\vert \allowbreak \nonscript\,\mathopen{}}
+\DeclarePairedDelimiterX\Set[1]{\lbrace}{\rbrace}%
+ { \renewcommand\given{\SetSymbol[\delimsize]} #1 }
+
+% Absolute value, norm and inner product
+\DeclarePairedDelimiterX\abs[1]{\lvert}{\rvert}{
+\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiterX\norm[1]{\lVert}{\rVert}{
+\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{#1,#2}
+
+%% Theorem environments and autoref
+\newtheorem{thmdummy}{***}[chapter]
+\newcommand{\mynewtheorem}[2]{%
+  \newaliascnt{#1}{thmdummy}
+  \newtheorem{#1}[#1]{#2}
+  \aliascntresetthe{#1}
+  \expandafter\def\csname #1autorefname\endcsname{#2}
+}
+
+\theoremstyle{plain}
+    \mynewtheorem{theorem}{Theorem}
+    \mynewtheorem{lemma}{Lemma}
+    \mynewtheorem{corollary}{Corollary}
+    \mynewtheorem{proposition}{Proposition}
+    \newtheorem*{theorem*}{Theorem}
+    \newtheorem*{proposition*}{Proposition}
+    \newtheorem*{lemma*}{Lemma}
+
+\theoremstyle{definition}
+    \mynewtheorem{definition}{Definition}
+    \mynewtheorem{example}{Example}
+    \newtheorem*{example*}{Example}
+
+\theoremstyle{remark}
+    \mynewtheorem{remark}{Remark}
+    \mynewtheorem{notation}{Notation}
+
+
+% BibLaTeX bib library
+\addbibresource{bib.bib}

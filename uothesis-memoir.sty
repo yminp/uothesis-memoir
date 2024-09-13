@@ -1,0 +1,375 @@
+%% UO Thesis Memoir style following the example from the documentation of the memoir class
+
+%% Version 2.2 by Yongmin Park (Sep 13, 2023)
+%% If you need some supports for this template, contact yongminp@uoregon.edu
+
+\ProvidesPackage{uothesis-memoir}%
+    [2024/09/13 uothesis-memoir v2.2]
+
+\RequirePackage{etoolbox}
+\RequirePackage{url}
+
+\RequirePackage{ragged2e}
+
+
+
+% Spacing options
+\newcommand*{\setthesisspacing}[1]{%
+    \let\ThesisSpacing#1
+    \ThesisSpacing
+    }
+    
+\DeclareOption{onehalf}{%
+    \setthesisspacing{\OnehalfSpacing}%
+    }
+\DeclareOption{double}{%
+    \setthesisspacing{\DoubleSpacing}%
+    }
+\ExecuteOptions{onehalf}
+
+\DeclareOption{numsubsec}{%}
+\setsecnumdepth{subsection}
+}
+
+
+% LR Margin options
+
+\newlength{\ThesisLRMargin}
+
+\DeclareOption{1inmargin}{%
+    \setlength{\ThesisLRMargin}{1in}
+}
+\DeclareOption{1.25inmargin}{%
+    \setlength{\ThesisLRMargin}{1.25in}
+}
+\DeclareOption{1.5inmargin}{%
+    \setlength{\ThesisLRMargin}{1.5in}
+}
+
+\ExecuteOptions{1.25inmargin}
+
+\ProcessOptions\relax
+
+% Checking Memoir class loaded
+\makeatletter
+\@ifclassloaded{memoir}{\let\endthesispkg\relax}{%
+    \let\endthesispkg\endinput \PackageError{uothesis-memoir}{%
+    The uothesis-memoir package only works with the memoir class}{%
+    \@ehd}
+    }
+\endthesispkg
+\makeatother 
+
+%% For URL, verbatim and footnote using normal font
+\urlstyle{same}
+\setverbatimfont{\normalfont\rmfamily}
+\renewcommand*{\foottextfont}{\normalfont\normalsize}
+
+
+
+%% For distingushing single appendix chapter and multiple appendices chapters
+
+% For single appendix chapter
+\newenvironment{appendixsingle}[1]%
+{\begin{appendices}
+\appendix
+\chapter*{#1}
+\addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{Appendix: #1}}{Appendix: Appendix #1}}
+}%
+{\end{appendices}}
+
+% For multiple appendices chapters
+\newenvironment{appendicesmulti}%
+{\begin{appendices}
+    \def\appendixtocname{APPENDICES}
+    \addtocontents{toc} %
+    {\cftpagenumbersoff{chapter}}
+        \addappheadtotoc
+    \addtocontents{toc}%
+    {\cftpagenumberson{chapter}}
+}%
+{\end{appendices}}
+
+
+%% Page layout 
+
+% No trim
+\settrims{0pt}{0pt}
+
+% LR margins
+\setlrmarginsandblock{\ThesisLRMargin}{*}{1}
+
+%TB margins
+\newlength{\linespace}
+\setlength{\linespace}{\baselineskip}  % current equivalent of \onelineskip
+\setlength{\headheight}{\onelineskip}
+\setlength{\headsep}{\linespace}
+\addtolength{\headsep}{-\topskip}
+
+\setlength{\uppermargin}{1in} % Setting the top margin, min 1in
+\addtolength{\uppermargin}{\headheight}
+\addtolength{\uppermargin}{\headsep} % These increase the length of the top margin slightly, but it is allowed because the ETD manual only specified the minimum.
+
+\setlength{\lowermargin}{1in} % Setting the bottom margin, min 1in
+
+\setlength{\textheight}{\paperheight} % Setting the text body space
+\addtolength{\textheight}{-\uppermargin}
+\addtolength{\textheight}{-\lowermargin}
+
+\setlength{\footskip}{\lowermargin}
+\addtolength{\footskip}{-0.75in} % Footer is 0.75in from the bottom at minimum
+\setlength{\footnotesep}{\onelineskip}
+
+%% the fiddle lengths (for title/approval page, others for prefatory pages)
+\newlength{\toptafiddle} \setlength{\toptafiddle}{2\linespace}
+\newlength{\bottafiddle} \setlength{\bottafiddle}{0pt}
+\newlength{\topfiddle}   \setlength{\topfiddle}{\toptafiddle}
+\newlength{\botfiddle}   \setlength{\botfiddle}{\onelineskip}
+
+\checkandfixthelayout[nearest]
+
+% Left Justification and indent
+\setlength{\RaggedRightParindent}{2em} % Indent
+\AtBeginDocument{
+\RaggedRight
+} % Excute Left justification
+
+
+% For some prefatory pages
+ \newcommand*{\addtotextheight}[1]{%
+    \twocolumn
+    \addtolength{\textheight}{#1}%
+    \onecolumn}
+
+% Page Styles for main text
+\makepagestyle{uothesis}
+    \makeevenfoot{uothesis}{}{\thepage}{}
+    \makeoddfoot{uothesis}{}{\thepage}{}
+
+
+% for continuation pages of the ToC, LoF, LoT
+\makepagestyle{uothesistoc}
+   \makeevenfoot{uothesistoc}{}{\thepage}{}
+   \makeoddfoot{uothesistoc}{}{\thepage}{}
+\makepagestyle{uothesislof}
+   \makeevenfoot{uothesislof}{}{\thepage}{}
+   \makeoddfoot{uothesislof}{}{\thepage}{}
+\makepagestyle{uothesislot}
+   \makeevenfoot{uothesislot}{}{\thepage}{}
+   \makeoddfoot{uothesislot}{}{\thepage}{}
+
+%%%% The LoF
+\AtBeginDocument{%
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\addtodef{\listoffigures}{\clearpage\pagestyle{uothesislof}}{}
+\renewcommand*{\lofheadstart}{\vspace*{-\topfiddle}}
+\renewcommand*{\afterloftitle}{\thispagestyle{plain}%
+   \par \vspace*{\linespace}  {\normalfont\normalsize Figure \hfill Page}\par\vspace*{\linespace}\nobreak}
+   }
+
+%%% The LoT
+ \AtBeginDocument{%
+ \renewcommand{\listtablename}{LIST OF TABLES}
+ \addtodef{\listoftables}{\clearpage\pagestyle{uothesislot}}{}
+ \renewcommand*{\lotheadstart}{\vspace*{-\topfiddle}}
+ \renewcommand*{\afterlottitle}{\thispagestyle{plain}%
+   \par \vspace*{\linespace}  {\normalfont\normalsize Table \hfill Page}\par\vspace*{\linespace}\nobreak}
+   }
+
+%%%% Do the ToC
+\AtBeginDocument{%
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+ \addtodef{\tableofcontents}{\clearpage\pagestyle{uothesistoc}}{}
+ \renewcommand*{\tocheadstart}{\vspace*{-\topfiddle}}
+ \renewcommand*{\aftertoctitle}{\thispagestyle{plain}%
+ \par \vspace*{\linespace} {\normalfont\normalsize Chapter \hfill Page} \par\vspace*{\linespace}\nobreak}
+ }
+ % Because of babel, AtBeginsDocument should be used.
+
+% put 3 levels into the ToC
+ \AtBeginDocument{%
+ \maxtocdepth{subsection} 
+ }
+
+
+% At least 3 leader dots
+
+
+
+% Adding leader dots and font setting
+\renewcommand*{\cftchapterfont}{\normalfont}
+ \renewcommand*{\cftchapterpagefont}{\normalfont}
+ %\renewcommand*{\cftdotsep}{1}
+ \renewcommand*{\cftchapterleader}{%
+ \cftchapterfont\cftdotfill{\cftchapterdotsep}}
+
+ \renewcommand*{\cftchapterdotsep}{\cftdotsep}
+
+ %%% no extra space before the entry, or in the LoF/LoT
+%\setlength{\cftbeforechapterskip}{12pt}
+%\renewcommand*{\insertchapterspace}{}
+
+% Chapter, section and subsection TOC font setting
+\makeatletter
+\settocpreprocessor{chapter}{%
+  \let\tempf@rtoc\f@rtoc%
+  \def\f@rtoc{%
+  \texorpdfstring{\MakeTextUppercase{\tempf@rtoc}}{\tempf@rtoc}}%
+}
+\makeatother
+
+\renewcommand*{\cftsectionfont}{\normalfont}   
+
+\renewcommand*{\cftsubsectionfont}{\normalfont\itshape} 
+
+% CFT numbering style
+
+\renewcommand*{\cftchapteraftersnum}{.}
+\renewcommand*{\cftsectionaftersnum}{.}
+\renewcommand*{\cftsubsectionaftersnum}{.}
+\renewcommand*{\cftfigureaftersnum}{.}
+\renewcommand*{\cfttableaftersnum}{.}
+
+
+ %% chapter style
+ \makeatletter
+ \makechapterstyle{uothesis}{%
+   \setlength{\beforechapskip}{-\topfiddle}
+   \setlength{\midchapskip}{1.0\onelineskip}
+   \setlength{\afterchapskip}{1.0\onelineskip}
+   \renewcommand*{\chapnamefont}{\normalfont}
+   \renewcommand*{\chapnumfont}{\chapnamefont}
+    \renewcommand*{\printchaptername}{\chapnamefont\MakeUppercase{\@chapapp}}
+   \renewcommand*{\printchapternum}{\centering\chapnumfont \thechapter}
+   \renewcommand*{\chaptitlefont}{\normalfont\centering}
+  \renewcommand*{\printchaptertitle}[1]{\chaptitlefont \MakeTextUppercase{##1}}
+  \renewcommand*{\printchapternonum}{}
+    }
+\makeatother
+
+ \aliaspagestyle{chapter}{plain}
+
+%% chapter style for appendices
+\makeatletter
+ \makechapterstyle{uothesisapp}{%
+   \setlength{\beforechapskip}{-\topfiddle}
+   \setlength{\midchapskip}{1.0\onelineskip}
+   \setlength{\afterchapskip}{1.0\onelineskip}
+   \renewcommand*{\chapnamefont}{\normalfont}
+   \renewcommand*{\chapnumfont}{\chapnamefont}
+   \renewcommand*{\printchaptername}{ \chapnamefont\MakeUppercase{\@chapapp}}
+   \renewcommand*{\printchapternum}{\centering\chapnumfont \thechapter}
+   \renewcommand*{\chaptitlefont}{\normalfont\centering}
+   \renewcommand*{\printchaptertitle}[1]{\chaptitlefont \MakeTextUppercase{##1}}
+   \renewcommand*{\printchapternonum}{\centering\chapnamefont \MakeUppercase{\@chapapp}  
+   \afterchapternum}
+    }
+\makeatother
+
+ %%% different chapter style for appendices, (and double spaced)
+ %\addtodef{\appendix}{}{\chapterstyle{uothesisapp}\ThesisSpacing}
+\appto{\appendix}{\chapterstyle{uothesisapp}\ThesisSpacing}
+
+
+
+
+ %%% (subsub)section styles
+ \setsecheadstyle{\centering\normalfont}
+  \setbeforesecskip{-1\onelineskip plus -1ex minus -.2ex}
+ \setaftersecskip{1\onelineskip plus .2ex}
+ \setsubsecheadstyle{\centering\normalfont\itshape}
+ \setbeforesubsecskip{-1\onelineskip plus -1ex minus -.2ex}
+ \setaftersubsecskip{1\onelineskip plus .2ex}
+
+ %% Captions
+ \captionnamefont{\itshape}
+ \captiontitlefont{\normalfont}% title font
+ \precaption{\raggedright}% for Caption N
+ \captiondelim{. }% newline
+ \captionstyle{\raggedright}% for title
+ \setlength{\belowcaptionskip}{\onelineskip}
+
+
+ %% for Bibliography chapter; only for thebibliography environment
+ \renewcommand*{\bibname}{BIBLIOGRAPHY}
+ \setlength{\bibitemsep}{\onelineskip}
+
+ \renewcommand*{\biblistextra}{%
+   \setlength{\itemsep}{\bibitemsep}
+   \setlength{\labelwidth}{0pt}
+   \setlength{\leftmargin}{3em}% hanging indent
+   \setlength{\itemindent}{-\leftmargin}}
+
+   \renewcommand*{\bibsection}{%
+   \ThesisSpacing
+   \chapter*{\bibname}\addcontentsline{toc}{chapter}{\bibname}
+   \SingleSpacing}
+
+%% endnotes
+ \renewcommand*{\notesname}{NOTES}
+ \renewcommand*{\notedivision}{%
+ \ThesisSpacing
+   \chapter*{\notesname}
+   \addcontentsline{toc}{chapter}{\notesname}
+   \SingleSpacing}
+
+\continuousnotenums
+ \renewcommand*{\notenuminnotes}[1]{\textsuperscript{#1}\space}
+ \renewcommand{\noteinnotes}[1]{#1\\}
+ \renewcommand*{\pagenotesubhead}[3]{}% no subheads
+
+ %%% general macro for Abstract, etc., headings
+ \newcommand*{\pretoctitle}[1]{{\clearpage\centering
+   \vspace*{-\topfiddle}#1\par \vspace*{\linespace}}}
+   
+ %%% ACKNOWLEDGMENTS heading
+ \newcommand{\thesisacknowledgments}{\pretoctitle{ACKNOWLEDGMENTS}}
+
+  %%% ABSTRACT heading
+ \newcommand{\thesisabstract}{%
+   \pretoctitle{\MakeUppercase{\thesisdoctype} ABSTRACT}}
+
+%%% CURRICULUM VITAE heading
+ \newcommand{\thesiscv}{\pretoctitle{CURRICULUM VITAE}}
+
+%%% DEDICATION Heading
+ \newcommand{\thesisdedication}{%
+   \pretoctitle{DEDICATION}}
+
+%%% APPROVAL heading
+ \newcommand{\thesisapproval}{%
+   \pretoctitle{\MakeUppercase{\thesisdoctype} APPROVAL PAGE}}
+
+
+ %%%% for the title page and approval page.
+ % your title
+ \newcommand{\settitle}[1]{\def\thesistitle{#1}}
+ % you
+ \newcommand{\setauthor}[1]{\def\thesisauthor{#1}}
+ % document type (e.g., thesis)
+ \newcommand{\setdoctype}[1]{\lowercase{\def\thesisdoctype{#1}}}
+ % possible degree
+ \newcommand{\setdegree}[1]{\def\thesisdegree{#1}}
+ % Department
+ \newcommand{\setdept}[1]{\def\thesisdept{#1}}
+  % Major
+ \newcommand{\setmajor}[1]{\def\thesismajor{#1}}
+ % graduation date
+ \newcommand{\setgradyear}[1]{\def\thesisgradyear{#1}}
+  \newcommand{\setgradmonth}[1]{\def\thesisgradmonth{#1}}
+  \def\thesisgraddate{\thesisgradmonth \ \thesisgradyear}
+  \newcommand{\setgradterm}[1]{\def\thesisgradterm{#1}}
+
+
+%% use the chapterstyle and plain pagestyle
+  \chapterstyle{uothesis}
+   \pagestyle{plain}
+    %%%%%%%%%%%%%%% end of *.sty file
+    \endinput
+    %%%%%%%%%%%%%%%
+
+    
+
+   
+
+ 

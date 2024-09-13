@@ -1,0 +1,25 @@
+v. 1.0 (Apr 2, 2023)
+Initially creadted based on the 2021 UO dissertation style and policy manual 
+
+v. 1.1 (Apr 4, 2023)
+Miscelleneous command changes for convenience, and correcting the style in more accordance with the ETD style manual and provided Word template.
+
+v. 1.2 (Apr 11, 2023)
+- Style correction for CTF: adding a period after the number and emphasized the object names.
+- Bib style has been updated.
+
+v. 1.3 (Jun 30, 2023)
+- After reviewing from Graduate School, some formatting issues have been fixed in more accodance with the ETD style guideline.
+
+v. 1.4 (Oct 2, 2023)
+- Adopting 2023 ETD Style
+link: https://graduatestudies.uoregon.edu/sites/default/files/2023-07/2023-style-manual.pdf
+
+v 2.0 (Jan 10, 2024)
+- CV section is implemented, so one can add that.
+
+v 2.1 (Apr 8, 2024)
+- The compatibility problem with clveref package was fixed.
+
+v2.2 (Sep 13, 2024)
+- Modification for better adoptation of 2023 ETD style.

@@ -1,0 +1,11 @@
+Note for bib library regarding the AMS style:
+
+
+Purpose of this notes:
+Even if you obtained your bib entries from MathSciNet, some modifications are needed because often the entries do not follow the standard data structure.
+
+1. For volume number in a series for book or related entries: you MUST put the volum numbers in the 'number' fields not 'volume' fields.
+
+2. For specifying the language of an entry: Locate the language in the 'title' field with paranthesis, and remove the 'language' field. 
+
+3. For 'pages' field: This is NOT for the total number of pages. This is the page numbers or page ranges for the part you used in the references.
