@@ -1,4 +1,3 @@
-
 # uothesis-memoir
 
 A LaTeX dissertation/thesis template for the current University of Oregon ETD style, based on the 2023 style requirements from the Division of Graduate Studies.
@@ -103,4 +102,3 @@ Because of the ETD style requirements, appendices are typeset differently depend
 ## License
 
 This project is licensed under the LaTeX Project Public License, version 1.3c.
-EOF
