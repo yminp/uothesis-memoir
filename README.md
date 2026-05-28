@@ -1,4 +1,4 @@
-cat > README.md <<'EOF'
+
 # uothesis-memoir
 
 A LaTeX dissertation/thesis template for the current University of Oregon ETD style, based on the 2023 style requirements from the Division of Graduate Studies.
