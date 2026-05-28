@@ -14,7 +14,8 @@ https://www.overleaf.com/latex/templates/uothesis-memoir/nnwbzcpckqhd
 
 This is an unofficial University of Oregon thesis/dissertation LaTeX template.
 
-It is not maintained, endorsed, or approved by the University of Oregon. Users are responsible for checking the template against the current UO Thesis and Dissertation Style and Policy Manual before submission.
+It is not maintained, endorsed, or approved by the University of Oregon. Users are responsible for checking the template against the current UO Thesis and Dissertation Style and Policy Manual before submission:
+[https://graduatestudies.uoregon.edu/academics/thesis-dissertation/resources-latex-users](https://graduatestudies.uoregon.edu/academics/thesis-dissertation)
 
 ## Template Structure
 
